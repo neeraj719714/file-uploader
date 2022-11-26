@@ -1,25 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import FilesList from "./FilesList";
+import UploadContainer from "./UploadContainer";
+import { getFiles } from "./api";
+import "./App.css";
 
-function App() {
+const App = () => {
+  const [allFiles, setAllFiles] = useState(null);
+
+  useEffect(() => {
+    getFiles().then((files) => {
+      setAllFiles(files);
+    });
+  }, []);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <FilesList files={allFiles} />
+      <UploadContainer />
     </div>
   );
-}
+};
 
 export default App;
